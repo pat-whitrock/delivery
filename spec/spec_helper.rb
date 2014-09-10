@@ -1,6 +1,11 @@
-require 'simplecov'
+require 'delivery'
 require 'rspec'
-require 'timecop'
-require 'webmock/rspec'
+# require 'simplecov'
+# require 'timecop'
+# require 'webmock/rspec'
 
-WebMock.disable_net_connect!
+# RSpec.configure do |config|
+#   Timecop.travel Time.local(2014, 1, 1, 12, 0, 0)
+# end
+
+# WebMock.disable_net_connect!

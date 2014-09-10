@@ -1,5 +1,2 @@
-require "delivery/version"
-
-module Delivery
-  # Your code goes here...
-end
+require 'delivery/version'
+require 'delivery/client'
