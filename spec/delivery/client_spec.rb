@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe Delivery::Client do
-  let(:client) { Delivery::Client.new }
+  let(:api_key) { 'foobar' }
+  let(:client) { Delivery::Client.new(api_key) }
+  let(:path) { 'merchant/300' }
+  let(:params) {{}}
 
   describe '#connection' do
     it 'looks like a Faraday connection' do
@@ -9,9 +12,15 @@ describe Delivery::Client do
     end
   end
 
+  describe '#get' do
+    it 'calls #request with the proper HTTP verb' do
+      binding.pry
+      expect(client).to receive(:request).with(:get, path, params)
+      client.send(:get, path, params)
+    end
+  end
+
   describe '#post' do
-    let(:path) { 'merchants' }
-    let(:params) {{}}
     it 'calls #request with the proper HTTP verb' do
       expect(client).to receive(:request).with(:post, path, params)
       client.send(:post, path, params)
@@ -20,7 +29,6 @@ describe Delivery::Client do
 
   describe '#put' do
     let(:path) { 'merchants/1/edit' }
-    let(:params) {{}}
     it 'calls #request with the proper HTTP verb' do
       expect(client).to receive(:request).with(:put, path, params)
       client.send(:put, path, params)
@@ -30,7 +38,6 @@ describe Delivery::Client do
   describe '#request' do
     let(:connection) { instance_double(Faraday::Connection) }
     let(:http_verb) { :post }
-    let(:path) { 'merchants' }
     before { allow(client).to receive(:connection).and_return(connection) }
 
     it 'calls an HTTP verb on #connection with a path' do
